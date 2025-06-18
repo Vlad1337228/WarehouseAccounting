@@ -8,20 +8,33 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<WarehouseFacility>().ToTable("StorageItems");
-        modelBuilder.Entity<Pallet>()
-            .ToTable("Pallets")
-            .Ignore(x => x.Weight)
-            .Ignore(x => x.Volume)
-            .Ignore(x => x.ExpirationDate);
+        modelBuilder.Entity<WarehouseFacility>(entity =>
+        {
+            entity.ToTable("WarehouseFacility");
+            entity.Ignore(x => x.Weight);
 
-        modelBuilder.Entity<Box>()
-            .ToTable("Box", t => 
+            entity.HasKey(e => e.Id);
+        });
+
+        modelBuilder.Entity<Pallet>(entity =>
+        {
+            entity.ToTable("Pallets");
+            entity.Ignore(x => x.Weight);
+            entity.Ignore(x => x.Volume);
+            entity.Ignore(x => x.ExpirationDate);
+        });
+
+        modelBuilder.Entity<Box>(entity =>
+        {
+            entity.ToTable("Boxes", t =>
             {
-                t.HasCheckConstraint("CK_Box_Dates", "ProductionDate IS NOT NULL OR ExpirationDate IS NOT NULL");
-            })
-            .Ignore(x => x.Volume)
-            .Ignore(x => x.ActualExpirationDate);
+                //t.HasCheckConstraint("CK_Box_Dates", "ProductionDate IS NOT NULL OR ExpirationDate IS NOT NULL");
+            });
+
+            entity.Ignore(x => x.Volume);
+            entity.Ignore(x => x.ActualExpirationDate);
+
+        });
 
         modelBuilder.Entity<Box>()
             .HasOne(b => b.Pallet)
@@ -30,5 +43,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
     }
 
     public DbSet<Pallet> Pallets { get; set; }
+
+    public DbSet<WarehouseFacility> WarehouseFacilitys { get; set; }
     public DbSet<Box> Boxes { get; set; }
 }

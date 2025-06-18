@@ -34,6 +34,8 @@ public static class DatabaseInitializer
             },
         ]);
 
+        await context.SaveChangesAsync();
+
         await context.AddRangeAsync([
             new Box
             {
