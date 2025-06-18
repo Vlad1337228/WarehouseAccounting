@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WarehouseAccounting.Database.Context;
 using WarehouseAccounting.Database.Extensions;
+using WarehouseAccounting.Infrastructure.Interfaces;
+using WarehouseAccounting.Infrastructure.Services;
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -21,8 +23,12 @@ var serviceProvider = services.BuildServiceProvider();
 using (var scope = serviceProvider.CreateScope())
 {
     using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
     await DatabaseInitializer.Initialize(context);
+    
+    var warehouseAccountingService = scope.ServiceProvider.GetRequiredService<IWarehouseAccountingService>();
+    
+    // Задача 1
+    var groupedPallets = await warehouseAccountingService.GetPallets();
 
 
     await context.Database.EnsureDeletedAsync();
@@ -34,4 +40,6 @@ void AddServices(IServiceCollection services)
     {
         opt.UseNpgsql(configuration.GetConnectionString("WarehouseAccountingDb"));
     });
+
+    services.AddScoped<IWarehouseAccountingService, WarehouseAccountingService>();
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using WarehouseAccounting.Database.Context;
+﻿using WarehouseAccounting.Database.Context;
 using WarehouseAccounting.Database.Models;
 
 namespace WarehouseAccounting.Database.Extensions;
@@ -13,42 +11,39 @@ public static class DatabaseInitializer
         await context.Database.EnsureCreatedAsync();
 
         await context.Pallets.AddRangeAsync([
-            new Pallet
+            new PalletEntity
             {
                 Id = 1,
                 Width = 1000,
                 Height = 20,
                 Depth = 1000,
             },
-            new Pallet
+            new PalletEntity
             {
                 Id = 2,
                 Width = 500,
                 Height = 10,
                 Depth = 500,
             },
-            new Pallet
+            new PalletEntity
             {
                 Id = 3,
                 Width = 700,
                 Height = 35,
                 Depth = 700,
             },
-        ]);
-
-        await context.Boxes.AddRangeAsync([
-            new Box
+            new PalletEntity
             {
                 Id = 4,
-                Depth = 400,
-                Height = 350,
-                Width = 350,
-                PalletId = 1,
-                ProductionDate = new DateOnly(2025, 3, 22),
-                ExpirationDate = null,
-                Weight = 100
+                Width = 600,
+                Height = 45,
+                Depth = 800,
             },
-            new Box
+        ]);
+
+        await context.Boxes.AddRangeAsync(new List<BoxEntity>()
+        {
+            new BoxEntity
             {
                 Id = 5,
                 Depth = 300,
@@ -60,7 +55,7 @@ public static class DatabaseInitializer
                 Weight = 100
             },
 
-            new Box
+            new BoxEntity
             {
                 Id = 6,
                 Depth = 450,
@@ -71,7 +66,7 @@ public static class DatabaseInitializer
                 ExpirationDate = null,
                 Weight = 4500
             },
-            new Box
+            new BoxEntity
             {
                 Id = 7,
                 Depth = 120,
@@ -82,7 +77,7 @@ public static class DatabaseInitializer
                 ExpirationDate = new DateOnly(2024, 8, 20),
                 Weight = 1800
             },
-            new Box
+            new BoxEntity
             {
                 Id = 8,
                 Depth = 750,
@@ -93,7 +88,7 @@ public static class DatabaseInitializer
                 ExpirationDate = null,
                 Weight = 8200
             },
-            new Box
+            new BoxEntity
             {
                 Id = 9,
                 Depth = 300,
@@ -104,7 +99,7 @@ public static class DatabaseInitializer
                 ExpirationDate = null,
                 Weight = 3500
             },
-            new Box
+            new BoxEntity
             {
                 Id = 10,
                 Depth = 600,
@@ -115,7 +110,7 @@ public static class DatabaseInitializer
                 ExpirationDate = new DateOnly(2024, 11, 30),
                 Weight = 7200
             },
-            new Box
+            new BoxEntity
             {
                 Id = 11,
                 Depth = 150,
@@ -126,7 +121,7 @@ public static class DatabaseInitializer
                 ExpirationDate = null,
                 Weight = 2500
             },
-            new Box
+            new BoxEntity
             {
                 Id = 12,
                 Depth = 900,
@@ -137,7 +132,7 @@ public static class DatabaseInitializer
                 ExpirationDate = new DateOnly(2024, 10, 10),
                 Weight = 9500
             },
-            new Box
+            new BoxEntity
             {
                 Id = 13,
                 Depth = 200,
@@ -148,7 +143,7 @@ public static class DatabaseInitializer
                 ExpirationDate = new DateOnly(2024, 12, 15),
                 Weight = 3000
             },
-            new Box
+            new BoxEntity
             {
                 Id = 14,
                 Depth = 350,
@@ -159,7 +154,7 @@ public static class DatabaseInitializer
                 ExpirationDate = null,
                 Weight = 4000
             },
-            new Box
+            new BoxEntity
             {
                 Id = 15,
                 Depth = 500,
@@ -170,7 +165,7 @@ public static class DatabaseInitializer
                 ExpirationDate = new DateOnly(2024, 12, 31),
                 Weight = 6500
             },
-            new Box
+            new BoxEntity
             {
                 Id = 16,
                 Depth = 100,
@@ -179,9 +174,9 @@ public static class DatabaseInitializer
                 PalletId = 1,
                 ProductionDate = new DateOnly(2025, 1, 1),
                 ExpirationDate = null,
-                Weight = 100
+                Weight = 75
             },
-            new Box
+            new BoxEntity
             {
                 Id = 17,
                 Depth = 500,
@@ -190,9 +185,9 @@ public static class DatabaseInitializer
                 PalletId = 1,
                 ProductionDate = new DateOnly(2025, 2, 15),
                 ExpirationDate = null,
-                Weight = 100
+                Weight = 64
             },
-            new Box
+            new BoxEntity
             {
                 Id = 18,
                 Depth = 300,
@@ -201,9 +196,42 @@ public static class DatabaseInitializer
                 PalletId = 1,
                 ProductionDate = new DateOnly(2025, 2, 16),
                 ExpirationDate = null,
-                Weight = 100
+                Weight = 53
             },
-        ]);
+            new BoxEntity
+            {
+                Id = 19,
+                Depth = 400,
+                Height = 350,
+                Width = 350,
+                PalletId = 1,
+                ProductionDate = new DateOnly(2025, 3, 22),
+                ExpirationDate = null,
+                Weight = 41
+            },
+            new BoxEntity
+            {
+                Id = 20,
+                Depth = 500,
+                Height = 350,
+                Width = 150,
+                PalletId = 4,
+                ProductionDate = null,
+                ExpirationDate = new DateOnly(2024, 8, 13),
+                Weight = 23
+            },
+            new BoxEntity
+            {
+                Id = 21,
+                Depth = 400,
+                Height = 350,
+                Width = 350,
+                PalletId = 4,
+                ProductionDate = new DateOnly(2025, 1, 6),
+                ExpirationDate = null,
+                Weight = 88
+            },
+        });
 
         await context.SaveChangesAsync();
     }

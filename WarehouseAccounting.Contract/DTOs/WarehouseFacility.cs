@@ -1,4 +1,4 @@
-﻿namespace WarehouseAccounting.Database.Models;
+﻿namespace WarehouseAccounting.Contract.DTOs;
 
 public abstract class WarehouseFacility
 {
@@ -22,7 +22,7 @@ public abstract class WarehouseFacility
     /// <summary>
     /// Вес в граммах.
     /// </summary>
-    public abstract decimal Weight { get; set; }
+    public virtual decimal Weight { get; set; }
 
     public abstract decimal Volume { get; }
 }

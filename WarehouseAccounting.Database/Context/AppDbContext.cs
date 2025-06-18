@@ -8,16 +8,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<WarehouseFacility>().UseTpcMappingStrategy();
+        modelBuilder.Entity<WarehouseFacilityBaseEntity>().UseTpcMappingStrategy();
 
-        modelBuilder.Entity<Pallet>(entity =>
+        modelBuilder.Entity<PalletEntity>(entity =>
         {
             entity.ToTable("Pallets");
             entity.Ignore(x => x.Volume);
             entity.Ignore(x => x.ExpirationDate);
         });
 
-        modelBuilder.Entity<Box>(entity =>
+        modelBuilder.Entity<BoxEntity>(entity =>
         {
             entity.ToTable("Boxes", t =>
             {
@@ -28,13 +28,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
             entity.Ignore(x => x.ActualExpirationDate);
         });
 
-        modelBuilder.Entity<Box>()
+        modelBuilder.Entity<BoxEntity>()
             .HasOne(b => b.Pallet)
             .WithMany(p => p.Boxes)
             .HasForeignKey(b => b.PalletId);
     }
 
-    public DbSet<Pallet> Pallets { get; set; }
-    public DbSet<WarehouseFacility> WarehouseFacilitys { get; set; }
-    public DbSet<Box> Boxes { get; set; }
+    public DbSet<PalletEntity> Pallets { get; set; }
+    public DbSet<WarehouseFacilityBaseEntity> WarehouseFacilitys { get; set; }
+    public DbSet<BoxEntity> Boxes { get; set; }
 }

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WarehouseAccounting.Database\WarehouseAccounting.Database.csproj" />
+    <ProjectReference Include="..\WarehouseAccounting.Infrastructure\WarehouseAccounting.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
