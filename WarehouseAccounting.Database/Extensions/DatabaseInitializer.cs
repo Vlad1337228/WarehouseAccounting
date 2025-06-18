@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using WarehouseAccounting.Database.Context;
 using WarehouseAccounting.Database.Models;
 

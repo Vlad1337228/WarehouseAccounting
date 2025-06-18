@@ -8,13 +8,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder.Entity<WarehouseFacility>(entity =>
-        //{
-        //    entity.ToTable("WarehouseFacility");
-        //    entity.HasKey(e => e.Id);
-        //    entity.UseTpcMappingStrategy();
-        //});
-
         modelBuilder.Entity<WarehouseFacility>().UseTpcMappingStrategy();
 
         modelBuilder.Entity<Pallet>(entity =>
