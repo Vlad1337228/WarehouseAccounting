@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "WarehouseAccountingDb": "Host=localhost;Port=5432;Database=RadioJuneDb;Username=postgres;Password=password"
+  }
+}

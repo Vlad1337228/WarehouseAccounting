@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAccounting", "WarehouseAccounting\WarehouseAccounting.csproj", "{A6D64BB8-3D0A-44CA-AB59-2E911051A6A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAccounting.Database", "WarehouseAccounting.Database\WarehouseAccounting.Database.csproj", "{87B5D409-0D06-4619-AB15-DF9516D68A7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6D64BB8-3D0A-44CA-AB59-2E911051A6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D64BB8-3D0A-44CA-AB59-2E911051A6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D64BB8-3D0A-44CA-AB59-2E911051A6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D64BB8-3D0A-44CA-AB59-2E911051A6A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B5D409-0D06-4619-AB15-DF9516D68A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B5D409-0D06-4619-AB15-DF9516D68A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B5D409-0D06-4619-AB15-DF9516D68A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B5D409-0D06-4619-AB15-DF9516D68A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70E1B064-663B-4A57-A633-560A66ED0630}
+	EndGlobalSection
+EndGlobal
