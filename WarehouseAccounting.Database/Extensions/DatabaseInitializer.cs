@@ -202,5 +202,7 @@ public static class DatabaseInitializer
                 Weight = 6500
             }
         ]);
+
+        await context.SaveChangesAsync();
     }
 }
