@@ -15,19 +15,23 @@ if (string.IsNullOrEmpty(configuration.GetConnectionString("WarehouseAccountingD
 }
 
 var services = new ServiceCollection();
-services.AddDbContextFactory<AppDbContext>(opt =>
-{
-    opt.UseNpgsql(configuration.GetConnectionString("WarehouseAccountingDb"));
-});
+AddServices(services);
 
 var serviceProvider = services.BuildServiceProvider();
+using (var scope = serviceProvider.CreateScope())
+{
+    using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-using var scope = serviceProvider.CreateScope();
-
-using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-await DatabaseInitializer.Initialize(context);
-
+    await DatabaseInitializer.Initialize(context);
 
 
-await context.Database.EnsureDeletedAsync();
+    await context.Database.EnsureDeletedAsync();
+}
+
+void AddServices(IServiceCollection services)
+{
+    services.AddDbContextFactory<AppDbContext>(opt =>
+    {
+        opt.UseNpgsql(configuration.GetConnectionString("WarehouseAccountingDb"));
+    });
+}
