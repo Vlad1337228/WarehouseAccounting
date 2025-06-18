@@ -9,6 +9,11 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .Build();
 
+if (string.IsNullOrEmpty(configuration.GetConnectionString("WarehouseAccountingDb")))
+{
+    throw new ArgumentNullException("Не найдена строка подключения к БД");
+}
+
 var services = new ServiceCollection();
 services.AddDbContextFactory<AppDbContext>(opt =>
 {
