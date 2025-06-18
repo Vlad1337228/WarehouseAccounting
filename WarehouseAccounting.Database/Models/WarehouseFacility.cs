@@ -22,7 +22,7 @@ public abstract class WarehouseFacility
     /// <summary>
     /// Вес в граммах.
     /// </summary>
-    public virtual decimal Weight { get; set; }
+    public decimal Weight { get; set; }
 
     public abstract decimal Volume { get; }
 }

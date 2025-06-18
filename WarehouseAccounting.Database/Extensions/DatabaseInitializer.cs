@@ -8,9 +8,10 @@ public static class DatabaseInitializer
 {
     public static async Task Initialize(AppDbContext context)
     {
+        await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
 
-        await context.AddRangeAsync([
+        await context.Pallets.AddRangeAsync([
             new Pallet
             {
                 Id = 1,
@@ -34,42 +35,7 @@ public static class DatabaseInitializer
             },
         ]);
 
-        await context.SaveChangesAsync();
-
-        await context.AddRangeAsync([
-            new Box
-            {
-                Id = 1,
-                Depth = 100,
-                Height = 100,
-                Width = 100,
-                PalletId = 1,
-                ProductionDate = new DateOnly(2025, 1, 1),
-                ExpirationDate = null,
-                Weight = 100
-            },
-            new Box
-            {
-                Id = 2,
-                Depth = 500,
-                Height = 200,
-                Width = 300,
-                PalletId = 1,
-                ProductionDate = new DateOnly(2025, 2, 15),
-                ExpirationDate = null,
-                Weight = 100
-            },
-            new Box
-            {
-                Id = 3,
-                Depth = 300,
-                Height = 300,
-                Width = 300,
-                PalletId = 1,
-                ProductionDate = new DateOnly(2025, 2, 16),
-                ExpirationDate = null,
-                Weight = 100
-            },
+        await context.Boxes.AddRangeAsync([
             new Box
             {
                 Id = 4,
@@ -156,7 +122,7 @@ public static class DatabaseInitializer
                 Width = 120,
                 PalletId = 3,
                 ProductionDate = new DateOnly(2024, 2, 28),
-                ExpirationDate = null, // Будет вычислено автоматически
+                ExpirationDate = null,
                 Weight = 2500
             },
             new Box
@@ -189,7 +155,7 @@ public static class DatabaseInitializer
                 Width = 300,
                 PalletId = 3,
                 ProductionDate = new DateOnly(2024, 6, 20),
-                ExpirationDate = null, // Будет вычислено автоматически
+                ExpirationDate = null,
                 Weight = 4000
             },
             new Box
@@ -202,7 +168,40 @@ public static class DatabaseInitializer
                 ProductionDate = null,
                 ExpirationDate = new DateOnly(2024, 12, 31),
                 Weight = 6500
-            }
+            },
+            new Box
+            {
+                Id = 16,
+                Depth = 100,
+                Height = 100,
+                Width = 100,
+                PalletId = 1,
+                ProductionDate = new DateOnly(2025, 1, 1),
+                ExpirationDate = null,
+                Weight = 100
+            },
+            new Box
+            {
+                Id = 17,
+                Depth = 500,
+                Height = 200,
+                Width = 300,
+                PalletId = 1,
+                ProductionDate = new DateOnly(2025, 2, 15),
+                ExpirationDate = null,
+                Weight = 100
+            },
+            new Box
+            {
+                Id = 18,
+                Depth = 300,
+                Height = 300,
+                Width = 300,
+                PalletId = 1,
+                ProductionDate = new DateOnly(2025, 2, 16),
+                ExpirationDate = null,
+                Weight = 100
+            },
         ]);
 
         await context.SaveChangesAsync();

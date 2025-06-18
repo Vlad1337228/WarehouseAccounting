@@ -8,18 +8,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<WarehouseFacility>(entity =>
-        {
-            entity.ToTable("WarehouseFacility");
-            entity.Ignore(x => x.Weight);
+        //modelBuilder.Entity<WarehouseFacility>(entity =>
+        //{
+        //    entity.ToTable("WarehouseFacility");
+        //    entity.HasKey(e => e.Id);
+        //    entity.UseTpcMappingStrategy();
+        //});
 
-            entity.HasKey(e => e.Id);
-        });
+        modelBuilder.Entity<WarehouseFacility>().UseTpcMappingStrategy();
 
         modelBuilder.Entity<Pallet>(entity =>
         {
             entity.ToTable("Pallets");
-            entity.Ignore(x => x.Weight);
             entity.Ignore(x => x.Volume);
             entity.Ignore(x => x.ExpirationDate);
         });
@@ -33,7 +33,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
 
             entity.Ignore(x => x.Volume);
             entity.Ignore(x => x.ActualExpirationDate);
-
         });
 
         modelBuilder.Entity<Box>()
@@ -43,7 +42,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
     }
 
     public DbSet<Pallet> Pallets { get; set; }
-
     public DbSet<WarehouseFacility> WarehouseFacilitys { get; set; }
     public DbSet<Box> Boxes { get; set; }
 }
