@@ -19,10 +19,5 @@ public abstract class WarehouseFacilityBaseEntity
     /// </summary>
     public decimal Depth { get; set; }
 
-    /// <summary>
-    /// Вес в граммах.
-    /// </summary>
-    public abstract decimal Weight { get; set; }
-
     public abstract decimal Volume { get; }
 }

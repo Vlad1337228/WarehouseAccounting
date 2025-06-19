@@ -2,7 +2,7 @@
 
 public class BoxEntity : WarehouseFacilityBaseEntity
 {
-    public override decimal Weight { get; set; }
+    public decimal Weight { get; set; }
     public DateOnly? ProductionDate { get; set; }
     public DateOnly? ExpirationDate { get; set; }
     public DateOnly? ActualExpirationDate => ExpirationDate ?? (ProductionDate?.AddDays(100));
