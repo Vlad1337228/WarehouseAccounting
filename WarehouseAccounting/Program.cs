@@ -28,8 +28,10 @@ using (var scope = serviceProvider.CreateScope())
     var warehouseAccountingService = scope.ServiceProvider.GetRequiredService<IWarehouseAccountingService>();
     
     // Задача 1
-    var groupedPallets = await warehouseAccountingService.GetPallets();
-
+    var groupedPallets = await warehouseAccountingService.GetPalletsGroupedByExpirationDate();
+    
+    // Задача 2
+    var top3Pallets = await warehouseAccountingService.GetTop3PalletsByBoxesExpiration();
 
     await context.Database.EnsureDeletedAsync();
 }
