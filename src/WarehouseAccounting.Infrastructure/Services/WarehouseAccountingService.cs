@@ -16,7 +16,28 @@ public class WarehouseAccountingService
         await using var context = await _dbContextFactory.CreateDbContextAsync();
 
         // Плохо что in-memory
-        var pallets = context.Pallets.Include(x => x.Boxes).AsNoTracking().ToArray();
+        var pallets = context.Pallets
+            .Include(x => x.Boxes)
+            .AsNoTracking()
+            .ToArray()
+            .Select(x => new Pallet
+            {
+                Id = x.Id,
+                Depth = x.Depth,
+                Height = x.Height,
+                Width = x.Width,
+                Boxes = x.Boxes.Select(y => new Box
+                {
+                    Id = y.Id,
+                    Depth = y.Depth,
+                    Height = y.Height,
+                    Width = y.Width,
+                    ExpirationDate = y.ExpirationDate,
+                    ProductionDate = y.ProductionDate,
+                    PalletId = y.Id,
+                    Weight = y.Weight
+                }).ToArray()
+            }).ToArray();
 
         var groupedPallets = pallets
             .Where(x => x.ExpirationDate.HasValue)
@@ -25,23 +46,7 @@ public class WarehouseAccountingService
             .Select(x => new PalletsGroupedByExpirationDate
             {
                 ExpirationDate = x.Key!.Value,
-                Pallets = x.OrderBy(y => y.Weight).Select(x => new Pallet
-                {
-                    Id = x.Id,
-                    Weight = x.Weight,
-                    Depth = x.Depth,
-                    Height = x.Height,
-                    Width = x.Width,
-                    Boxes = x.Boxes.Select(y => new Box
-                    {
-                        Id = y.Id,
-                        Weight = y.Weight,
-                        Depth = y.Depth,
-                        Height = y.Height,
-                        Width = y.Width,
-                        PalletId = y.PalletId,
-                    }).ToArray()
-                }).ToArray()
+                Pallets = x.OrderBy(y => y.Weight).ToArray()
             }).ToArray();
 
         return groupedPallets;
@@ -59,9 +64,7 @@ public class WarehouseAccountingService
             .AsNoTracking()
             .ToArrayAsync();
 
-        var result = data.OrderByDescending(x => x.Boxes.Max(y => y.ActualExpirationDate))
-            .Take(3)
-            .OrderBy(x => x.Volume)
+        var result = data
             .Select(x => new Pallet
             {
                 Id = x.Id,
@@ -71,13 +74,19 @@ public class WarehouseAccountingService
                 Boxes = x.Boxes.Select(y => new Box
                 {
                     Id = y.Id,
-                    Weight = y.Weight,
                     Depth = y.Depth,
                     Height = y.Height,
                     Width = y.Width,
-                    ExpirationDate = y.ActualExpirationDate
+                    ExpirationDate = y.ExpirationDate,
+                    ProductionDate = y.ProductionDate,
+                    PalletId = y.Id,
+                    Weight = y.Weight
                 }).ToArray()
-            }).ToArray();
+            })
+            .OrderByDescending(x => x.Boxes.Max(y => y.ActualExpirationDate))
+            .Take(3)
+            .OrderBy(x => x.Volume)
+            .ToArray();
 
         return result;
     }

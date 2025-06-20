@@ -13,19 +13,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> optionsBuilder) : DbCon
         modelBuilder.Entity<PalletEntity>(entity =>
         {
             entity.ToTable("Pallets");
-            entity.Ignore(x => x.Volume);
-            entity.Ignore(x => x.ExpirationDate);
         });
 
         modelBuilder.Entity<BoxEntity>(entity =>
         {
             entity.ToTable("Boxes", t =>
             {
-                //t.HasCheckConstraint("CK_Box_Dates", "ProductionDate IS NOT NULL OR ExpirationDate IS NOT NULL");
+                t.HasCheckConstraint("CK_Box_Dates", "\"ProductionDate\" IS NOT NULL OR \"ExpirationDate\" IS NOT NULL");
             });
-
-            entity.Ignore(x => x.Volume);
-            entity.Ignore(x => x.ActualExpirationDate);
         });
 
         modelBuilder.Entity<BoxEntity>()

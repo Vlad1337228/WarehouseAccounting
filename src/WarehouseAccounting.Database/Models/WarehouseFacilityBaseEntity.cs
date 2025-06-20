@@ -19,5 +19,5 @@ public abstract class WarehouseFacilityBaseEntity
     /// </summary>
     public decimal Depth { get; set; }
 
-    public abstract decimal Volume { get; }
+    //public abstract decimal Volume { get; }
 }
