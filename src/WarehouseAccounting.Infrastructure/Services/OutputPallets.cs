@@ -15,7 +15,7 @@ public class OutputPallets : IOutputhHandler<IReadOnlyCollection<Pallet>>
             Console.ResetColor();
 
             Console.WriteLine($"Габариты: {pallet.Width}x{pallet.Height}x{pallet.Depth}");
-            Console.WriteLine($"Вес: {pallet.Weight} г");
+            Console.WriteLine($"Вес: {pallet.Weight} кг");
             Console.WriteLine($"Объем: {pallet.Volume} см^3");
             Console.WriteLine($"Срок годности: {pallet.ExpirationDate?.ToString("dd-MM-yyyy") ?? "-"}");
 
@@ -30,8 +30,8 @@ public class OutputPallets : IOutputhHandler<IReadOnlyCollection<Pallet>>
                     var sb = new StringBuilder();
                     sb.AppendLine($"  ID: {box.Id}");
                     sb.AppendLine($"  Габариты: {box.Width}x{box.Height}x{box.Depth}");
-                    sb.AppendLine($"  Вес: {box.Weight} г");
-                    sb.AppendLine($"  Объем: {box.Volume} см^3");
+                    sb.AppendLine($"  Вес: {box.Weight} кг");
+                    sb.AppendLine($"  Объем: {box.Volume} см^3, {box.Volume / 1000000} м^3");
                     sb.AppendLine($"  Срок годности: {box.ActualExpirationDate?.ToString("dd-MM-yyyy") ?? "-"}");
                     Console.WriteLine(sb.ToString());
                 }
