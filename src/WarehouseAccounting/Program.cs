@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WarehouseAccounting.Contract.DTOs;
+using WarehouseAccounting.Contract.Interfaces;
 using WarehouseAccounting.Database.Context;
 using WarehouseAccounting.Database.Extensions;
 using WarehouseAccounting.Infrastructure.Interfaces;
@@ -34,6 +36,11 @@ using (var scope = serviceProvider.CreateScope())
     var top3Pallets = await warehouseAccountingService.GetTop3PalletsByBoxesExpiration();
 
     await context.Database.EnsureDeletedAsync();
+
+    // Вывод в консоль
+    var outputDispatcher = serviceProvider.GetRequiredService<IOutputDispatcher>();
+    await outputDispatcher.OutputObject(groupedPallets);
+    await outputDispatcher.OutputObject(top3Pallets);
 }
 
 void AddServices(IServiceCollection services)
@@ -44,4 +51,7 @@ void AddServices(IServiceCollection services)
     });
 
     services.AddScoped<IWarehouseAccountingService, WarehouseAccountingService>();
+    services.AddScoped<IOutputDispatcher, OutputDispatcher>();
+    services.AddTransient<IOutputhHandler<IReadOnlyCollection<Pallet>>, OutputPallets>();
+    services.AddTransient<IOutputhHandler<IReadOnlyCollection<PalletsGroupedByExpirationDate>>, OutputPalletsGroupedByExpirationDate>();
 }
